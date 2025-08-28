@@ -1,0 +1,118 @@
+# 🖤 Voice Orc — Dev Ready Checklist & Quickstart
+
+Welcome to the Voice Orc repo! Here’s everything you need to get started, ensure your local/dev environment is ready, and connect BlackBox or Copilot for rapid agentic voice AI development.
+
+---
+
+## 1. Repo Structure
+
+```
+voice-orc/
+├── .env.azure
+├── .env.free
+├── scripts/
+│   └── run.sh
+├── src/
+│   ├── main.py
+│   ├── voice_server.py
+│   └── agents/
+│       ├── planner.py
+│       ├── summarizer.py
+│       ├── state_manager.py
+│       ├── delegator.py
+│       └── logger.py
+├── logs/
+│   └── README.md
+├── ngrok.yml
+├── README.md
+...
+```
+
+---
+
+## 2. Environment Setup
+
+- Install [Poetry](https://python-poetry.org/docs/#installation)
+- Run `poetry install`
+- Fill in `.env.free` or `.env.azure` with your keys (see templates below)
+
+---
+
+## 3. Running the Assistant
+
+- **Start in free mode:**
+  ```bash
+  MODE=free ./scripts/run.sh
+  ```
+- **Or start in Azure mode:**
+  ```bash
+  MODE=azure ./scripts/run.sh
+  ```
+- This launches the server, logs to `logs/`, and starts ngrok for public tunneling.
+
+---
+
+## 4. Endpoints
+
+| Endpoint  | Method | Description |
+|-----------|--------|-------------|
+| `/health` | GET    | Status check |
+| `/voice`  | POST   | Audio → pipeline |
+| `/speak`  | POST   | Text → audio reply |
+
+---
+
+## 5. Agent Stubs
+
+All files in `src/agents/` are safe stub implementations. You can run/test out of the box, then BlackBox or Copilot can fill in each agent.
+
+---
+
+## 6. Logs
+
+- `logs/uvicorn.log` — Server logs
+- `logs/ngrok.log` — Ngrok logs
+- Watch with:  
+  ```bash
+  tail -f logs/uvicorn.log logs/ngrok.log
+  ```
+
+---
+
+## 7. Example Environment Files
+
+### `.env.free`
+```ini
+MODE=free
+WHISPER_BIN=./bin/whisper.cpp
+WHISPER_MODEL=ggml-base.en.bin
+ELEVEN_API_KEY=your-elevenlabs-api-key
+ELEVEN_VOICE_ID=your-elevenlabs-voice-id
+SQLITE_DB=./state_manager.db
+NGROK_AUTHTOKEN=your-ngrok-token
+```
+
+### `.env.azure`
+```ini
+MODE=azure
+AZURE_SPEECH_KEY=your-azure-speech-key
+AZURE_SPEECH_REGION=your-azure-region
+COSMOS_ENDPOINT=https://your-cosmos-account.documents.azure.com:443/
+COSMOS_KEY=your-cosmos-key
+COSMOS_DB=AgentDB
+COSMOS_COLL=Leads
+NGROK_AUTHTOKEN=your-ngrok-token
+```
+
+---
+
+## 8. Next Steps
+
+- Clone, fill env files, run the script, verify endpoints.
+- Connect your voice client to the ngrok public URL.
+- Hand off to BlackBox or Copilot for agent upgrades and integrations.
+
+---
+
+**You’re ready to build and scale!**  
+_See `README.md` for more details, or ask BlackBox/Copilot for help on any file or agent._
